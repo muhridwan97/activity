@@ -113,10 +113,10 @@ $segment3 = $this->uri->segment(3);
 			</li>
 		<?php endif; ?>
 
-		<li class="nav-item<?= $segment1 == 'research' ? ' active' : '' ?>">
-			<a class="nav-link" href="<?= base_url('/research') ?>">
+		<li class="nav-item<?= $segment1 == 'page' ? ' active' : '' ?>">
+			<a class="nav-link" href="<?= base_url('/page') ?>">
 				<i class="mdi mdi-mail menu-icon"></i>
-				<span class="menu-title">Research</span>
+				<span class="menu-title">Page</span>
 			</a>
 		</li>
 

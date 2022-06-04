@@ -177,10 +177,11 @@ defined('PERMISSION_TRAINING_CREATE') OR define('PERMISSION_TRAINING_CREATE', 't
 defined('PERMISSION_TRAINING_EDIT') OR define('PERMISSION_TRAINING_EDIT', 'training-edit');
 defined('PERMISSION_TRAINING_DELETE') OR define('PERMISSION_TRAINING_DELETE', 'training-delete');
 
-// Exam permission
-defined('PERMISSION_EXAM_MANAGE') OR define('PERMISSION_EXAM_MANAGE', 'exam-manage');
-defined('PERMISSION_EXAM_ASSESS') OR define('PERMISSION_EXAM_ASSESS', 'exam-assess');
-defined('PERMISSION_EXAM_VIEW') OR define('PERMISSION_EXAM_VIEW', 'exam-view');
-defined('PERMISSION_EXAM_CREATE') OR define('PERMISSION_EXAM_CREATE', 'exam-create');
-defined('PERMISSION_EXAM_EDIT') OR define('PERMISSION_EXAM_EDIT', 'exam-edit');
-defined('PERMISSION_EXAM_DELETE') OR define('PERMISSION_EXAM_DELETE', 'exam-delete');
+// Page  permission
+defined('PERMISSION_PAGE_VIEW') OR define('PERMISSION_PAGE_VIEW', 'page-view');
+defined('PERMISSION_PAGE_CREATE') OR define('PERMISSION_PAGE_CREATE', 'page-create');
+defined('PERMISSION_PAGE_EDIT') OR define('PERMISSION_PAGE_EDIT', 'page-edit');
+defined('PERMISSION_PAGE_DELETE') OR define('PERMISSION_PAGE_DELETE', 'page-delete');
+defined('PERMISSION_PAGE_VALIDATE') OR define('PERMISSION_PAGE_VALIDATE', 'page-validate');
+
+
