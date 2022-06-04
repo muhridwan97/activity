@@ -73,7 +73,7 @@ $segment3 = $this->uri->segment(3);
 
 		<?php
 		if (AuthorizationModel::hasPermission([
-			PERMISSION_DEPARTMENT_VIEW, PERMISSION_LECTURER_VIEW,
+			PERMISSION_DEPARTMENT_VIEW, PERMISSION_MENU_VIEW,
 		])) :
 		?>
 			<li class="nav-item<?= $segment1 == 'master' && !in_array($segment2, ['role', 'user']) ? ' active' : '' ?>">
@@ -84,27 +84,10 @@ $segment3 = $this->uri->segment(3);
 				</a>
 				<div class="collapse<?= $segment1 == 'master' && !in_array($segment2, ['role', 'user']) ? ' show' : '' ?>" id="master">
 					<ul class="nav flex-column sub-menu">
-						<?php if (AuthorizationModel::isAuthorized(PERMISSION_LECTURER_VIEW)) : ?>
-							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'lecturer' ? ' active' : '' ?>">
-								<a class="nav-link" href="<?= site_url('master/lecturer') ?>">
-									<i class="mdi mdi-badge-account-horizontal-outline mr-2"></i>Lecturer
-									<?php if ($this->config->item('sso_enable')) : ?>
-										<span class="badge badge-info badge-pill ml-auto">
-											HR
-										</span>
-									<?php endif; ?>
-								</a>
-							</li>
-						<?php endif; ?>
-						<?php if (AuthorizationModel::isAuthorized(PERMISSION_STUDENT_VIEW)) : ?>
-							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'student' ? ' active' : '' ?>">
-								<a class="nav-link" href="<?= site_url('master/student') ?>">
-									<i class="mdi mdi-office-building-outline mr-2"></i>Student
-									<?php if ($this->config->item('sso_enable')) : ?>
-										<span class="badge badge-info badge-pill ml-auto">
-											HR
-										</span>
-									<?php endif; ?>
+						<?php if (AuthorizationModel::isAuthorized(PERMISSION_MENU_VIEW)) : ?>
+							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'menu' ? ' active' : '' ?>">
+								<a class="nav-link" href="<?= site_url('master/menu') ?>">
+									<i class="mdi mdi-badge-account-horizontal-outline mr-2"></i>Menu
 								</a>
 							</li>
 						<?php endif; ?>
@@ -113,12 +96,14 @@ $segment3 = $this->uri->segment(3);
 			</li>
 		<?php endif; ?>
 
+		<?php if (AuthorizationModel::isAuthorized(PERMISSION_PAGE_VIEW)) : ?>
 		<li class="nav-item<?= $segment1 == 'page' ? ' active' : '' ?>">
 			<a class="nav-link" href="<?= base_url('/page') ?>">
 				<i class="mdi mdi-mail menu-icon"></i>
 				<span class="menu-title">Page</span>
 			</a>
-		</li>
+		</li>		
+		<?php endif; ?>
 
 		<li class="nav-item<?= $segment1 == 'skripsi' && !in_array($segment2, ['role', 'user']) ? ' active' : '' ?>">
 			<a class="nav-link" data-toggle="collapse" href="#skripsi" aria-expanded="<?= $segment1 == 'skripsi' && !in_array($segment2, ['role', 'user']) ? 'true' : 'false' ?>" aria-controls="master">

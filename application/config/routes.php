@@ -64,6 +64,9 @@ $route['agreement'] = 'legal/agreement';
 $route['cookie'] = 'legal/cookie';
 $route['sla'] = 'legal/sla';
 
+// $route['master/menu/(.+)'] = 'master/menu/sub/$1';
+// $route['master/menu/create'] = 'master/menu/create';
+
 $route['skripsi/create'] = 'skripsi/skripsi/create';
 $route['skripsi/save'] = 'skripsi/skripsi/save';
 $route['skripsi/edit/(.+)'] = 'skripsi/skripsi/edit/$1';

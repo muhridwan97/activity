@@ -6,8 +6,8 @@
 
             <div class="form-group">
                 <label for="page_name">Nama Halaman</label>
-                <textarea class="form-control" id="page_name" name="page_name" maxlength="500" required
-                          placeholder="Enter page title"><?= set_value('page_name') ?></textarea>
+                <input type="page_name" class="form-control" id="page_name" name="page_name" maxlength="500" required
+                        value="<?= set_value('page_name') ?>" placeholder="menu name">
                 <?= form_error('page_name') ?>
             </div>
             <div class="form-group">

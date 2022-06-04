@@ -184,4 +184,11 @@ defined('PERMISSION_PAGE_EDIT') OR define('PERMISSION_PAGE_EDIT', 'page-edit');
 defined('PERMISSION_PAGE_DELETE') OR define('PERMISSION_PAGE_DELETE', 'page-delete');
 defined('PERMISSION_PAGE_VALIDATE') OR define('PERMISSION_PAGE_VALIDATE', 'page-validate');
 
+// Menu  permission
+defined('PERMISSION_MENU_VIEW') OR define('PERMISSION_MENU_VIEW', 'menu-view');
+defined('PERMISSION_MENU_CREATE') OR define('PERMISSION_MENU_CREATE', 'menu-create');
+defined('PERMISSION_MENU_EDIT') OR define('PERMISSION_MENU_EDIT', 'menu-edit');
+defined('PERMISSION_MENU_DELETE') OR define('PERMISSION_MENU_DELETE', 'menu-delete');
+defined('PERMISSION_MENU_VALIDATE') OR define('PERMISSION_MENU_VALIDATE', 'menu-validate');
+
 
