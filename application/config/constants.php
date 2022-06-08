@@ -198,4 +198,11 @@ defined('PERMISSION_BANNER_EDIT') OR define('PERMISSION_BANNER_EDIT', 'banner-ed
 defined('PERMISSION_BANNER_DELETE') OR define('PERMISSION_BANNER_DELETE', 'banner-delete');
 defined('PERMISSION_BANNER_VALIDATE') OR define('PERMISSION_BANNER_VALIDATE', 'banner-validate');
 
+// Blog  permission
+defined('PERMISSION_BLOG_VIEW') OR define('PERMISSION_BLOG_VIEW', 'blog-view');
+defined('PERMISSION_BLOG_CREATE') OR define('PERMISSION_BLOG_CREATE', 'blog-create');
+defined('PERMISSION_BLOG_EDIT') OR define('PERMISSION_BLOG_EDIT', 'blog-edit');
+defined('PERMISSION_BLOG_DELETE') OR define('PERMISSION_BLOG_DELETE', 'blog-delete');
+defined('PERMISSION_BLOG_VALIDATE') OR define('PERMISSION_BLOG_VALIDATE', 'blog-validate');
+
 

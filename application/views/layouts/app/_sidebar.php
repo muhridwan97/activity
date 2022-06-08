@@ -105,7 +105,7 @@ $segment3 = $this->uri->segment(3);
 		</li>		
 		<?php endif; ?>
 
-		<?php if (AuthorizationModel::isAuthorized(PERMISSION_PAGE_VIEW)) : ?>
+		<?php if (AuthorizationModel::isAuthorized(PERMISSION_BANNER_VIEW)) : ?>
 		<li class="nav-item<?= $segment1 == 'banner' ? ' active' : '' ?>">
 			<a class="nav-link" href="<?= base_url('/banner') ?>">
 				<i class="mdi mdi-satellite menu-icon"></i>
@@ -114,12 +114,14 @@ $segment3 = $this->uri->segment(3);
 		</li>		
 		<?php endif; ?>
 
-		<li class="nav-item<?= $segment1 == 'repository' ? ' active' : '' ?>">
-			<a class="nav-link" href="<?= base_url('repository') ?>">
-				<i class="mdi mdi-folder-download menu-icon"></i>
-				<span class="menu-title">Repository</span>
+		<?php if (AuthorizationModel::isAuthorized(PERMISSION_BLOG_VIEW)) : ?>
+		<li class="nav-item<?= $segment1 == 'blog' ? ' active' : '' ?>">
+			<a class="nav-link" href="<?= base_url('/blog') ?>">
+				<i class="mdi mdi-blogger menu-icon"></i>
+				<span class="menu-title">Blog</span>
 			</a>
-		</li>
+		</li>		
+		<?php endif; ?>
 
 		<?php if (AuthorizationModel::isAuthorized(PERMISSION_ACCOUNT_EDIT)) : ?>
 			<li class="nav-title">ACCOUNT & SETTING <i class="mdi mdi-arrow-right ml-auto"></i></li>
