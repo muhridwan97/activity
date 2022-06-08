@@ -11,6 +11,7 @@ class StatusHistoryModel extends App_Model
     
     const TYPE_PAGE = 'page';
     const TYPE_MENU = 'menu';
+    const TYPE_BANNER = 'banner';
 
     /**
      * Get base query of table.

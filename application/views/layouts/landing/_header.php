@@ -48,7 +48,51 @@
 					<ul class="nav navbar-nav navbar-left menu-nav-bottom">
 						<li><a href="http://pkim.uin-suka.ac.id/"><i class="glyphicon glyphicon-home" style="margin-right:5px"></i>Home</a> </li>
 
-						<li>
+						<?php
+						function doOutputList($treeMenu, $deep = 0)
+						{
+							$padding = str_repeat('  ', $deep * 3);
+
+							if ($deep != 0) {
+								echo '<ul class="dropdown-menu">';
+							}
+							foreach ($treeMenu as $arr) {
+								if ($deep == 0) {
+									echo '<li>';
+								}else{
+									if(isset($arr['sub_menu'])){
+										echo '<li class="dropdown-submenu">';
+									}else{
+										echo '<li>';
+									}
+								}
+								if (isset($arr['sub_menu'])) {
+									if ($deep != 0) {
+										echo '<a href="'.$arr['url'].'">' . $arr['menu_name'] . '</a>';
+									} else {
+										echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">' . $arr['menu_name'] . ' <span class="caret"></span></a>';
+									}
+
+									// echo $padding .'    '. $arr['menu_name'];
+									doOutputList($arr['sub_menu'], $deep + 1);
+								} else {
+									if ($deep != 0) {
+										echo '<a href="'.$arr['url'].'">' . $arr['menu_name'] . '</a>';
+									} else {
+										echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">' . $arr['menu_name'] . ' <span class="caret"></span></a>';
+									}
+									// echo $padding .'    '. $arr['menu_name'];
+								}
+								echo "</li>";
+							}
+							if ($deep != 0) {
+								echo "</ul>";
+							}
+						}
+
+						doOutputList($treeMenu);
+						?>
+						<!-- <li>
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#">AKADEMIK <span class="caret"></span></a>
 							<ul class="dropdown-menu listss30">
 								<li class="dropdown-submenu">
@@ -138,7 +182,7 @@
 							<ul class="dropdown-menu listss35">
 								<li><a href="welcome/list_post/68.html">INFO PENGUMUMAN</a></li>
 							</ul>
-						</li>
+						</li> -->
 
 					</ul>
 					<ul class="nav navbar-nav navbar-right menu-nav-bottom nav-log-search">

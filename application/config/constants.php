@@ -191,4 +191,11 @@ defined('PERMISSION_MENU_EDIT') OR define('PERMISSION_MENU_EDIT', 'menu-edit');
 defined('PERMISSION_MENU_DELETE') OR define('PERMISSION_MENU_DELETE', 'menu-delete');
 defined('PERMISSION_MENU_VALIDATE') OR define('PERMISSION_MENU_VALIDATE', 'menu-validate');
 
+// Banner  permission
+defined('PERMISSION_BANNER_VIEW') OR define('PERMISSION_BANNER_VIEW', 'banner-view');
+defined('PERMISSION_BANNER_CREATE') OR define('PERMISSION_BANNER_CREATE', 'banner-create');
+defined('PERMISSION_BANNER_EDIT') OR define('PERMISSION_BANNER_EDIT', 'banner-edit');
+defined('PERMISSION_BANNER_DELETE') OR define('PERMISSION_BANNER_DELETE', 'banner-delete');
+defined('PERMISSION_BANNER_VALIDATE') OR define('PERMISSION_BANNER_VALIDATE', 'banner-validate');
+
 

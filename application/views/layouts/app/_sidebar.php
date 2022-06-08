@@ -105,24 +105,14 @@ $segment3 = $this->uri->segment(3);
 		</li>		
 		<?php endif; ?>
 
-		<li class="nav-item<?= $segment1 == 'skripsi' && !in_array($segment2, ['role', 'user']) ? ' active' : '' ?>">
-			<a class="nav-link" data-toggle="collapse" href="#skripsi" aria-expanded="<?= $segment1 == 'skripsi' && !in_array($segment2, ['role', 'user']) ? 'true' : 'false' ?>" aria-controls="master">
-				<i class="mdi mdi-folder-multiple menu-icon"></i>
-				<span class="menu-title">Skripsi</span>
-				<i class="menu-arrow"></i>
+		<?php if (AuthorizationModel::isAuthorized(PERMISSION_PAGE_VIEW)) : ?>
+		<li class="nav-item<?= $segment1 == 'banner' ? ' active' : '' ?>">
+			<a class="nav-link" href="<?= base_url('/banner') ?>">
+				<i class="mdi mdi-satellite menu-icon"></i>
+				<span class="menu-title">Banner</span>
 			</a>
-			<div class="collapse<?= $segment1 == 'skripsi' && !in_array($segment2, ['role', 'user']) ? ' show' : '' ?>" id="skripsi">
-				<ul class="nav flex-column sub-menu">
-					<?php if (AuthorizationModel::isAuthorized(PERMISSION_SKRIPSI_VIEW)) : ?>
-						<li class="nav-item<?= $segment1 == 'skripsi' && ($segment2 == 'skripsi' || $segment2 == '' || $segment2 != 'logbook') ? ' active' : '' ?>">
-							<a class="nav-link" href="<?= site_url('skripsi/skripsi') ?>">
-								<i class="mdi mdi-folder-outline mr-2"></i>Skripsi
-							</a>
-						</li>
-					<?php endif; ?>
-				</ul>
-			</div>
-		</li>
+		</li>		
+		<?php endif; ?>
 
 		<li class="nav-item<?= $segment1 == 'repository' ? ' active' : '' ?>">
 			<a class="nav-link" href="<?= base_url('repository') ?>">

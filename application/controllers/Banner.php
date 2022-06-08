@@ -1,12 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-use Carbon\Carbon;
-use Milon\Barcode\DNS2D;
 /**
- * Class Page
+ * Class Banner
  * @property LecturerModel $lecturer
- * @property PageModel $page
+ * @property BannerModel $banner
  * @property StudentModel $student
  * @property StatusHistoryModel $statusHistory
  * @property DepartmentModel $department
@@ -15,12 +13,12 @@ use Milon\Barcode\DNS2D;
  * @property Mailer $mailer
  * @property Uploader $uploader
  */
-class Page extends App_Controller
+class Banner extends App_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('PageModel', 'page');
+        $this->load->model('BannerModel', 'banner');
         $this->load->model('StudentModel', 'student');
         $this->load->model('LecturerModel', 'lecturer');
         $this->load->model('StatusHistoryModel', 'statusHistory');
@@ -38,11 +36,11 @@ class Page extends App_Controller
     }
 
     /**
-     * Show Page index page.
+     * Show Banner index banner.
      */
     public function index()
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_VIEW);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_VIEW);
 
         $filters = array_merge($_GET, ['page' => get_url_param('page', 1)]);
 
@@ -56,13 +54,13 @@ class Page extends App_Controller
         }else if($civitasType == "MAHASISWA"){
             $filters['mahasiswa'] = $civitasLoggedIn;
         }
-        $pages = $this->page->getAll($filters);
+        $banners = $this->banner->getAll($filters);
 
         if ($export) {
-            $this->exporter->exportFromArray('page', $pages);
+            $this->exporter->exportFromArray('banner', $banners);
         }
 
-        $this->render('page/index', compact('pages'));
+        $this->render('banner/index', compact('banners'));
     }
 
     /**
@@ -72,145 +70,141 @@ class Page extends App_Controller
      */
     public function view($id)
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_VIEW);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_VIEW);
 
-        $page = $this->page->getById($id);
+        $banner = $this->banner->getById($id);
 
-        $this->render('page/view', compact('page'));
+        $this->render('banner/view', compact('banner'));
     }
 
     /**
-     * Show create Page.
+     * Show create Banner.
      */
     public function create()
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_CREATE);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_CREATE);
 
-        $this->render('page/create');
+        $this->render('banner/create');
     }
 
     /**
-     * Save new Page data.
+     * Save new Banner data.
      */
     public function save()
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_CREATE);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_CREATE);
 
         if ($this->validate()) {
-            $page_name = $this->input->post('page_name');
-            $content = $this->input->post('content');
+            $title = $this->input->post('title');
+            $caption = $this->input->post('caption');
             
             $photo = "";
             if (!empty($_FILES['photo']['name'])) {
-                $options = ['destination' => 'page/' . date('Y/m')];
+                $options = ['destination' => 'banner/' . date('Y/m')];
                 if ($this->uploader->uploadTo('photo', $options)) {
                     $uploadedData = $this->uploader->getUploadedData();
                     $photo = $uploadedData['uploaded_path'];
                 } else {
-                    flash('danger', $this->uploader->getDisplayErrors(), '_back', 'page/create');
+                    flash('danger', $this->uploader->getDisplayErrors(), '_back', 'banner/create');
                 }
             }
             $this->db->trans_start();
-            $this->page->create([
-                'content' => $content,
-                'page_name' => $page_name,
+            $this->banner->create([
+                'caption' => $caption,
+                'title' => $title,
                 'photo' => $photo,
             ]);
-			$pageId = $this->db->insert_id();
-            $this->page->update([
-                'url' => "landing/page/".$pageId
-            ],$pageId);
 
             $this->db->trans_complete();
             if ($this->db->trans_status()) {
-                flash('success', "Page {$page_name} successfully created", 'page');
+                flash('success', "Banner {$title} successfully created", 'banner');
             } else {
-                flash('danger', "Create page failed, try again of contact administrator");
+                flash('danger', "Create banner failed, try again of contact administrator");
             }
         }
         $this->create();
     }
 
     /**
-     * Show edit Page form.
+     * Show edit Banner form.
      * @param $id
      */
     public function edit($id)
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_EDIT);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_EDIT);
 
-        $page = $this->page->getById($id);
+        $banner = $this->banner->getById($id);
 
-        $this->render('page/edit', compact('page'));
+        $this->render('banner/edit', compact('banner'));
     }
 
     /**
-     * Save new Page data.
+     * Save new Banner data.
      * @param $id
      */
     public function update($id)
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_EDIT);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_EDIT);
 
         if ($this->validate($this->_validation_rules($id))) {
-            $page_name = $this->input->post('page_name');
-            $content = $this->input->post('content');
+            $title = $this->input->post('title');
+            $caption = $this->input->post('caption');
 
-            $dataPage = $this->page->getById($id);
+            $dataBanner = $this->banner->getById($id);
             
-            $photo = $dataPage['photo'];
+            $photo = $dataBanner['photo'];
             if (!empty($_FILES['photo']['name'])) {
-                $options = ['destination' => 'page/' . date('Y/m')];
+                $options = ['destination' => 'banner/' . date('Y/m')];
                 if ($this->uploader->uploadTo('photo', $options)) {
                     $uploadedData = $this->uploader->getUploadedData();
                     $photo = $uploadedData['uploaded_path'];
                     //delete
-                    $this->uploader->delete($dataPage['photo']);
+                    $this->uploader->delete($dataBanner['photo']);
                 } else {
-                    flash('danger', $this->uploader->getDisplayErrors(), '_back', 'page/edit/'.$id);
+                    flash('danger', $this->uploader->getDisplayErrors(), '_back', 'banner/edit/'.$id);
                 }
             }
             $this->db->trans_start();
-            $this->page->update([
-                'content' => $content,
-                'page_name' => $page_name,
+            $this->banner->update([
+                'caption' => $caption,
+                'title' => $title,
                 'photo' => $photo,
             ],$id);
 
             $this->db->trans_complete();
             if ($this->db->trans_status()) {
-                flash('success', "Page {$dataPage['page_name']} successfully updated", 'page');
+                flash('success', "Banner {$dataBanner['title']} successfully updated", 'banner');
             } else {
-                flash('danger', "Update Page failed, try again of contact administrator");
+                flash('danger', "Update Banner failed, try again of contact administrator");
             }
         }
         $this->edit($id);
     }
 
     /**
-     * Perform deleting Page data.
+     * Perform deleting Banner data.
      *
      * @param $id
      */
     public function delete($id)
     {
-        AuthorizationModel::mustAuthorized(PERMISSION_PAGE_DELETE);
+        AuthorizationModel::mustAuthorized(PERMISSION_BANNER_DELETE);
 
-        $page = $this->page->getById($id);
+        $banner = $this->banner->getById($id);
         // push any status absent to history
         $this->statusHistory->create([
-            'type' => StatusHistoryModel::TYPE_PAGE,
+            'type' => StatusHistoryModel::TYPE_BANNER,
             'id_reference' => $id,
-            'description' => "Page is deleted",
-            'data' => json_encode($page)
+            'description' => "Banner is deleted",
+            'data' => json_encode($banner)
         ]);
 
-        if ($this->page->delete($id, true)) {
-            flash('warning', "Page {$page['page_name']} successfully deleted");
+        if ($this->banner->delete($id, true)) {
+            flash('warning', "Banner {$banner['banner_name']} successfully deleted");
         } else {
-            flash('danger', "Delete Page failed, try again or contact administrator");
+            flash('danger', "Delete Banner failed, try again or contact administrator");
         }
-        redirect('page');
+        redirect('banner');
     }
 
 
@@ -224,8 +218,8 @@ class Page extends App_Controller
     {
         $id = isset($params[0]) ? $params[0] : 0;
         return [
-            'page_name' => 'trim|required',
-            'content' => 'trim|required',
+            'title' => 'trim|required',
+            'caption' => 'trim|required',
         ];
     }
 
