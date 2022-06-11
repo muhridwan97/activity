@@ -13,6 +13,7 @@ class StatusHistoryModel extends App_Model
     const TYPE_MENU = 'menu';
     const TYPE_BANNER = 'banner';
     const TYPE_BLOG = 'blog';
+    const TYPE_AGENDA = 'agenda';
 
     /**
      * Get base query of table.

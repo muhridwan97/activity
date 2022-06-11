@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property LecturerModel $lecturer
  * @property MenuModel $menu
  * @property PageModel $page
+ * @property CategoryModel $category
  * @property StatusHistoryModel $statusHistory
  * @property DepartmentModel $department
  * @property UserModel $user
@@ -23,6 +24,7 @@ class Menu extends App_Controller
         parent::__construct();
         $this->load->model('MenuModel', 'menu');
         $this->load->model('PageModel', 'page');
+        $this->load->model('CategoryModel', 'category');
         $this->load->model('LecturerModel', 'lecturer');
         $this->load->model('StatusHistoryModel', 'statusHistory');
 
@@ -119,6 +121,15 @@ class Menu extends App_Controller
         AuthorizationModel::mustAuthorized(PERMISSION_MENU_CREATE);
 
         $pages = $this->page->getAll();
+        $categories = $this->category->getAll();
+        $temp = [];
+        foreach ($categories as $key => $category) {
+            $temp=[
+                'url' => "landing/blog/".$category['category'],
+                'page_name' => "Blog category ".$category['category']
+            ];
+            $pages[] = $temp;
+        };
         $parentId = $id;
 
         $this->render('menu/create', compact('pages', 'parentId'));

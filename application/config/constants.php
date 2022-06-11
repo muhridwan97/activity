@@ -205,4 +205,18 @@ defined('PERMISSION_BLOG_EDIT') OR define('PERMISSION_BLOG_EDIT', 'blog-edit');
 defined('PERMISSION_BLOG_DELETE') OR define('PERMISSION_BLOG_DELETE', 'blog-delete');
 defined('PERMISSION_BLOG_VALIDATE') OR define('PERMISSION_BLOG_VALIDATE', 'blog-validate');
 
+// Category  permission
+defined('PERMISSION_CATEGORY_VIEW') OR define('PERMISSION_CATEGORY_VIEW', 'category-view');
+defined('PERMISSION_CATEGORY_CREATE') OR define('PERMISSION_CATEGORY_CREATE', 'category-create');
+defined('PERMISSION_CATEGORY_EDIT') OR define('PERMISSION_CATEGORY_EDIT', 'category-edit');
+defined('PERMISSION_CATEGORY_DELETE') OR define('PERMISSION_CATEGORY_DELETE', 'category-delete');
+defined('PERMISSION_CATEGORY_VALIDATE') OR define('PERMISSION_CATEGORY_VALIDATE', 'category-validate');
+
+// Agenda  permission
+defined('PERMISSION_AGENDA_VIEW') OR define('PERMISSION_AGENDA_VIEW', 'agenda-view');
+defined('PERMISSION_AGENDA_CREATE') OR define('PERMISSION_AGENDA_CREATE', 'agenda-create');
+defined('PERMISSION_AGENDA_EDIT') OR define('PERMISSION_AGENDA_EDIT', 'agenda-edit');
+defined('PERMISSION_AGENDA_DELETE') OR define('PERMISSION_AGENDA_DELETE', 'agenda-delete');
+defined('PERMISSION_AGENDA_VALIDATE') OR define('PERMISSION_AGENDA_VALIDATE', 'agenda-validate');
+
 

@@ -50,9 +50,12 @@
             <div class="form-group">
                 <label for="category">Category</label>
                 <select class="form-control select2" name="category" id="category" required data-placeholder="Select Category">
-                    <option value="">-- Select Dosen --</option>
-                    <option value="OPINI"<?= set_select('category') ?>>OPINI</option>
-                    <option value="BAKSOS"<?= set_select('category') ?>>BAKSOS</option>
+                    <option value="">-- Select Category --</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $category['id'] ?>"<?= set_select('category') ?>>
+                            <?= $category['category'] ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
                 <?= form_error('category') ?>
             </div>
@@ -79,7 +82,7 @@
 
             <div class="d-flex justify-content-between mt-3">
                 <button onclick="history.back()" type="button" class="btn btn-light">Back</button>
-                <button type="submit" class="btn btn-success mr-2" data-toggle="one-touch" data-touch-message="Saving...">Save Review</button>
+                <button type="submit" class="btn btn-success mr-2" data-toggle="one-touch" data-touch-message="Saving...">Save Blog</button>
             </div>
         </div>
     </div>

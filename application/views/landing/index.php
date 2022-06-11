@@ -505,19 +505,15 @@
       <div class="underscore"></div>
       <div class="col-sm-12 agenda-wrapper">
         <ul>
-          <div data-aos="zoom-in">
-            <a href="Welcome/single_agenda/BAKSOS-20191970-01-0109-33-39.html">
-              <li class="agenda-post"><i class="glyphicon glyphicon-calendar" style="margin-right:5px"></i>BAKSOS 2019
-                <p class="date-agenda">17 May 2019</p>
-              </li>
-            </a>
-          </div>
-          <div data-aos="zoom-in">
-            <a href="Welcome/single_agenda/CHEF1970-01-0109-33-39.html">
-              <li class="agenda-post"><i class="glyphicon glyphicon-calendar" style="margin-right:5px"></i>CHEF<p class="date-agenda">26 Apr 2019</p>
-              </li>
-            </a>
-          </div>
+          <?php foreach ($agendas as $key => $agenda) : ?>
+            <div data-aos="zoom-in">
+              <a href="<?= base_url('landing/agenda/'.$agenda['id']) ?>">
+                <li class="agenda-post"><i class="glyphicon glyphicon-calendar" style="margin-right:5px"></i><?= $agenda['title'] ?>
+                  <p class="date-agenda"><?= format_date($agenda['date'], 'd F Y') ?></p>
+                </li>
+              </a>
+            </div>
+          <?php endforeach; ?>
         </ul>
       </div>
     </div>

@@ -91,6 +91,13 @@ $segment3 = $this->uri->segment(3);
 								</a>
 							</li>
 						<?php endif; ?>
+						<?php if (AuthorizationModel::isAuthorized(PERMISSION_CATEGORY_VIEW)) : ?>
+							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'category' ? ' active' : '' ?>">
+								<a class="nav-link" href="<?= site_url('master/category') ?>">
+									<i class="mdi mdi-tag-text-outline mr-2"></i>Category
+								</a>
+							</li>
+						<?php endif; ?>
 					</ul>
 				</div>
 			</li>
@@ -119,6 +126,15 @@ $segment3 = $this->uri->segment(3);
 			<a class="nav-link" href="<?= base_url('/blog') ?>">
 				<i class="mdi mdi-blogger menu-icon"></i>
 				<span class="menu-title">Blog</span>
+			</a>
+		</li>		
+		<?php endif; ?>
+
+		<?php if (AuthorizationModel::isAuthorized(PERMISSION_AGENDA_VIEW)) : ?>
+		<li class="nav-item<?= $segment1 == 'agenda' ? ' active' : '' ?>">
+			<a class="nav-link" href="<?= base_url('/agenda') ?>">
+				<i class="mdi mdi-view-agenda menu-icon"></i>
+				<span class="menu-title">Agenda</span>
 			</a>
 		</li>		
 		<?php endif; ?>

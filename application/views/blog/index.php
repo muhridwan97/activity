@@ -21,6 +21,7 @@
                 <thead>
                 <tr>
                     <th class="text-md-center" style="width: 60px">No</th>
+                    <th>Category</th>
                     <th>Title</th>
                     <th>Body</th>
                     <th>Writer</th>
@@ -34,6 +35,7 @@
                 <?php foreach ($blogs['data'] as $blog): ?>
                     <tr>
                         <td class="text-md-center"><?= ++$no ?></td>
+                        <td><?= $blog['category'] ?></td>
                         <td><?= $blog['title'] ?></td>
                         <td><?= substr(strip_tags($blog['body']),0,110) . "..."?></td>
                         <td><?= $blog['writer_name'] ?></td>
@@ -81,7 +83,7 @@
                 <?php endforeach; ?>
                 <?php if(empty($blogs['data'])): ?>
                     <tr>
-                        <td colspan="6">No blogs data available</td>
+                        <td colspan="8">No blogs data available</td>
                     </tr>
                 <?php endif; ?>
                 </tbody>

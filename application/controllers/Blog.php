@@ -7,6 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property BlogModel $blog
  * @property StudentModel $student
  * @property StatusHistoryModel $statusHistory
+ * @property CategoryModel $category
  * @property DepartmentModel $department
  * @property UserModel $user
  * @property Exporter $exporter
@@ -22,6 +23,7 @@ class Blog extends App_Controller
         $this->load->model('StudentModel', 'student');
         $this->load->model('LecturerModel', 'lecturer');
         $this->load->model('StatusHistoryModel', 'statusHistory');
+        $this->load->model('CategoryModel', 'category');
 
         $this->load->model('DepartmentModel', 'department');
         $this->load->model('UserModel', 'user');
@@ -97,8 +99,9 @@ class Blog extends App_Controller
                 'id' => $civitasLogin['id']
             ]);
         }
+        $categories = $this->category->getAll();
 
-        $this->render('blog/create', compact('users'));
+        $this->render('blog/create', compact('users', 'categories'));
     }
 
     /**
@@ -141,7 +144,7 @@ class Blog extends App_Controller
             $this->blog->create([
                 'title' => $title,
                 'body' => $body,
-                'category' => $category,
+                'id_category' => $category,
                 'date' => format_date($date),
                 'writed_by' => $user,
                 'attachment' => $attachment,
@@ -170,8 +173,9 @@ class Blog extends App_Controller
 
         $blog = $this->blog->getById($id);
         $users = $this->user->getAll(['status'=> UserModel::STATUS_ACTIVATED]);
+        $categories = $this->category->getAll();
 
-        $this->render('blog/edit', compact('blog', 'users'));
+        $this->render('blog/edit', compact('blog', 'users', 'categories'));
     }
 
     /**
@@ -216,7 +220,7 @@ class Blog extends App_Controller
             $this->blog->update([
                 'title' => $title,
                 'body' => $body,
-                'category' => $category,
+                'id_category' => $category,
                 'date' => format_date($date),
                 'writed_by' => $user,
                 'attachment' => $attachment,
@@ -251,14 +255,14 @@ class Blog extends App_Controller
             'type' => StatusHistoryModel::TYPE_BLOG,
             'id_reference' => $id,
             'status' => $blog['status'],
-            'description' => "Review Curriculum is deleted",
+            'description' => "Blog is deleted",
             'data' => json_encode($blog)
         ]);
 
         if ($this->blog->delete($id, true)) {
-            flash('warning', "Review Curriculum {$blog['title']} successfully deleted");
+            flash('warning', "Blog {$blog['title']} successfully deleted");
         } else {
-            flash('danger', "Delete Review Curriculum failed, try again or contact administrator");
+            flash('danger', "Delete Blog failed, try again or contact administrator");
         }
         redirect('blog');
     }

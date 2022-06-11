@@ -50,9 +50,12 @@
             <div class="form-group">
                 <label for="category">Category</label>
                 <select class="form-control select2" name="category" id="category" required data-placeholder="Select Category">
-                    <option value="">-- Select Dosen --</option>
-                    <option value="OPINI"<?= set_select('category', 'OPINI', $blog['category'] == 'OPINI') ?>>OPINI</option>
-                    <option value="BAKSOS"<?= set_select('category', 'BAKSOS', $blog['category'] == 'BAKSOS') ?>>BAKSOS</option>
+                    <option value="">-- Select Category --</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?= $category['id'] ?>"<?= set_select('category', $blog['id_category'], $blog['id_category'] == $category['id']) ?>>
+                            <?= $category['category'] ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
                 <?= form_error('category') ?>
             </div>

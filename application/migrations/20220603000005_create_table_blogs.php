@@ -11,6 +11,7 @@ class Migration_Create_table_blogs extends CI_Migration
     {
         $this->dbforge->add_field([
             'id' => ['type' => 'INT', 'unsigned' => TRUE, 'constraint' => 11, 'auto_increment' => TRUE],
+            'id_category' => ['type' => 'INT', 'unsigned' => TRUE, 'constraint' => 11],
             'title' => ['type' => 'VARCHAR', 'constraint' => '500'],
             'body' => ['type' => 'TEXT', 'null' => TRUE],
             'writed_by' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => TRUE],
@@ -28,7 +29,8 @@ class Migration_Create_table_blogs extends CI_Migration
             'updated_by' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => TRUE, 'null' => TRUE],
             'deleted_at' => ['type' => 'TIMESTAMP', 'null' => true],
             'deleted_by' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => TRUE, 'null' => TRUE]
-        ]);
+        ])
+            ->add_field('CONSTRAINT fk_blogs_ref_categories FOREIGN KEY (id_category) REFERENCES ref_categories(id) ON DELETE CASCADE ON UPDATE CASCADE');
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('blogs');
         $this->db->insert_batch('prv_permissions', [

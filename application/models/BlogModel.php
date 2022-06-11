@@ -29,9 +29,11 @@ class BlogModel extends App_Model
         $baseQuery = $this->db->select([
             $this->table . '.*',
             'user.name AS writer_name',
+            'ref_categories.category'
         ])
             ->from($this->table)
-            ->join($this->tableUser . ' as user', 'user.id = ' . $this->table . '.writed_by', 'left');
+            ->join($this->tableUser . ' as user', 'user.id = ' . $this->table . '.writed_by', 'left')
+            ->join('ref_categories','ref_categories.id = '. $this->table . '.id_category', 'left');
 
         return $baseQuery;
     }
@@ -56,7 +58,7 @@ class BlogModel extends App_Model
             }
         }
         if (key_exists('category', $filters) && !empty($filters['category'])) {
-            $baseQuery->where($this->table . '.category', $filters['category']);
+            $baseQuery->where('ref_categories.category', $filters['category']);
         }
         $baseQuery->where($this->table . '.is_deleted', false);
         $data = $baseQuery->limit($limit, $start)->get()->result_array();
