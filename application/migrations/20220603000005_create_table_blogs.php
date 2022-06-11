@@ -51,6 +51,10 @@ class Migration_Create_table_blogs extends CI_Migration
                 'module' => 'blog', 'submodule' => 'blog', 'permission' => PERMISSION_BLOG_DELETE,
                 'description' => 'Delete blog'
             ],
+            [
+                'module' => 'blog', 'submodule' => 'blog', 'permission' => PERMISSION_BLOG_VALIDATE,
+                'description' => 'Validate blog'
+            ],
         ]);
         echo 'Migrate Migration_Create_table_blogs' . PHP_EOL;
     }

@@ -44,60 +44,23 @@
   <h2 class="title-section">POPULAR POST</h2>
   <div class="underscore"></div>
   <div class="container">
-    <div data-aos="fade-up">
+    
+    <?php foreach ($blogPopulars as $key => $blogPopular) :?>
+      <div data-aos="fade-up">
       <div class="col-sm-4 post-populer">
-        <img class="img-responsive img-popular" src="assets/img/thumb/bea41da75d76587cefa394781f6187bc.jpg">
+        <img class="img-responsive img-popular" src="<?= asset_url($blogPopular['photo']) ?>">
         <h3>
-          <a href="single/pendidikan-humanis-secara-daring-apakah-dapat-dilaksanakan-2020-10-0510-46-48.html" class="title-post-popular">PENDIDIKAN HUMANIS SECARA DARING : APAKAH DAPAT DILAKSANAKAN?</a>
+          <a href="<?= base_url('landing/blog-view/'.$blogPopular['id']) ?>" class="title-post-popular"><?= $blogPopular['title'] ?></a>
         </h3>
-        <h6 style="color:#555;font-family: myf">Penulis : <b>MUHAMAD ADITYA HIDAYAH</b><span style="margin-left:10px">
-            Tanggal : <b>05 Oct 2020</b></span></h6>
+        <h6 style="color:#555;font-family: myf">Penulis : <b><?= $blogPopular['writer_name'] ?></b><span style="margin-left:10px">
+            Tanggal : <b><?= format_date($blogPopular['date'], 'd F Y') ?></b></span></h6>
         <p class="content-popular-post">
-          PENDIDIKAN HUMANIS SECARA DARING : APAKAH DAPAT DILAKSANAKAN?
-
-          Muhamad Aditya Hidayah / 20104060025
-
-          e-mail : madityahidayah@gmail.com
-
-          Pendidikan Kimia Universitas Islam Negeri Sunan Kalijaga
-          ...
+          <?= substr(strip_tags($blogPopular['body']),0,110) . "..."?>
         </p>
-        <a href="single/pendidikan-humanis-secara-daring-apakah-dapat-dilaksanakan-2020-10-0510-46-48.html" style="color:green">Selengkapnya >> </a>
+        <a href="<?= base_url('landing/blog-view/'.$blogPopular['id']) ?>" style="color:green">Selengkapnya >> </a>
       </div>
     </div>
-    <div data-aos="fade-up">
-      <div class="col-sm-4 post-populer">
-        <img class="img-responsive img-popular" src="assets/img/thumb/7740486c888ec05384d76e623a6dcaca.jpg">
-        <h3>
-          <a href="single/gangguan-mental-pada-masa-pandemi2020-10-0601-35-38.html" class="title-post-popular">Gangguan Mental Pada Masa Pandemi</a>
-        </h3>
-        <h6 style="color:#555;font-family: myf">Penulis : <b>KHAFIFAH AULIA WULAYALIN </b><span style="margin-left:10px"> Tanggal : <b>06 Oct 2020</b></span></h6>
-        <p class="content-popular-post">
-          &nbsp;
-
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Benarkah hanya daya tahan tubuh saja yang perlu dijaga?
-
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Masa pandemi ini memang mengharuskan semua orang untuk terus berdiam di...
-        </p>
-        <a href="single/gangguan-mental-pada-masa-pandemi2020-10-0601-35-38.html" style="color:green">Selengkapnya >>
-        </a>
-      </div>
-    </div>
-    <div data-aos="fade-up">
-      <div class="col-sm-4 post-populer">
-        <img class="img-responsive img-popular" src="assets/img/thumb/e21606f6d3d577f294d5c42a2af6dc94.gif">
-        <h3>
-          <a href="single/Menjawab-Tantangan-di-Era-4-0-dengan-Aplikasi-Penelitian-Berbasis-STEM-2019-04-1110-02-00.html" class="title-post-popular">Menjawab Tantangan di Era 4.0., dengan Aplikasi Penelitian Berbasis STEM.</a>
-        </h3>
-        <h6 style="color:#555;font-family: myf">Penulis : <b>FAUZAN ABRORI</b><span style="margin-left:10px"> Tanggal
-            : <b>11 Apr 2019</b></span></h6>
-        <p class="content-popular-post">
-          Yogjakarta - Dalam meningkatkan kualitas dan mutu mahasiswa untuk menjawab tantangan baru di era 4.0, prodi
-          pendidikan kimia UIN Sunan Kalijaga Yogyakarta menyelenggarakan kuliah umum dengan tema Apli...
-        </p>
-        <a href="single/Menjawab-Tantangan-di-Era-4-0-dengan-Aplikasi-Penelitian-Berbasis-STEM-2019-04-1110-02-00.html" style="color:green">Selengkapnya >> </a>
-      </div>
-    </div>
+    <?php endforeach; ?>
 
   </div>
 </div>
@@ -328,177 +291,48 @@
     <div class="col-sm-3">
       <h3 class="title-section title-section-bottom" style="line-height: 1.3em">MAHASISWA <br> TERAKTIF</h3>
       <div class="underscore"></div>
+      <?php foreach ($bestWriters as $key => $bestWriter) :?>
       <div data-aos="zoom-in">
-        <a href="penulis/20104060025.html">
+        <a href="<?= base_url('landing/writer/'.$bestWriter['writed_by']) ?>">
           <div class="col-sm-12 post-pengumuman">
             <div class="col-sm-4 col-xs-5 img-pengumuman-wrap">
               <img class="img-responsive img-pengumuman" src="assets/img/trophy.svg" />
             </div>
             <div class="col-sm-8 col-xs-7 main-pengumuman">
-              <a href="penulis/20104060025.html" class="aktif">
-                <h5 class="title-pengumuman">20104060025</h5>
-                <h5 class="title-pengumuman" style="color:#555">MUHAMAD ADITYA HIDAYAH</h5>
-                <h6 class="title-pengumuman" style="color:#6d9c6f">21 Posts</h6>
+              <a href="<?= base_url('landing/writer/'.$bestWriter['writed_by']) ?>" class="aktif">
+                <h5 class="title-pengumuman"><?= $bestWriter['no_student']?></h5>
+                <h5 class="title-pengumuman" style="color:#555"><?= $bestWriter['student_name']?></h5>
+                <h6 class="title-pengumuman" style="color:#6d9c6f"><?= $bestWriter['count_blog']?> Posts</h6>
               </a>
             </div>
           </div>
         </a>
       </div>
-      <div data-aos="zoom-in">
-        <a href="penulis/20104060014.html">
-          <div class="col-sm-12 post-pengumuman">
-            <div class="col-sm-4 col-xs-5 img-pengumuman-wrap">
-              <img class="img-responsive img-pengumuman" src="assets/img/trophy.svg" />
-            </div>
-            <div class="col-sm-8 col-xs-7 main-pengumuman">
-              <a href="penulis/20104060014.html" class="aktif">
-                <h5 class="title-pengumuman">20104060014</h5>
-                <h5 class="title-pengumuman" style="color:#555">NURUL UMAH</h5>
-                <h6 class="title-pengumuman" style="color:#6d9c6f">9 Posts</h6>
-              </a>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div data-aos="zoom-in">
-        <a href="penulis/20104060007.html">
-          <div class="col-sm-12 post-pengumuman">
-            <div class="col-sm-4 col-xs-5 img-pengumuman-wrap">
-              <img class="img-responsive img-pengumuman" src="assets/img/trophy.svg" />
-            </div>
-            <div class="col-sm-8 col-xs-7 main-pengumuman">
-              <a href="penulis/20104060007.html" class="aktif">
-                <h5 class="title-pengumuman">20104060007</h5>
-                <h5 class="title-pengumuman" style="color:#555">SOFI NIHAYATUL KAMILAH</h5>
-                <h6 class="title-pengumuman" style="color:#6d9c6f">8 Posts</h6>
-              </a>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div data-aos="zoom-in">
-        <a href="penulis/20104060026.html">
-          <div class="col-sm-12 post-pengumuman">
-            <div class="col-sm-4 col-xs-5 img-pengumuman-wrap">
-              <img class="img-responsive img-pengumuman" src="assets/img/trophy.svg" />
-            </div>
-            <div class="col-sm-8 col-xs-7 main-pengumuman">
-              <a href="penulis/20104060026.html" class="aktif">
-                <h5 class="title-pengumuman">20104060026</h5>
-                <h5 class="title-pengumuman" style="color:#555">MASITA ZUMNA MAULIDA</h5>
-                <h6 class="title-pengumuman" style="color:#6d9c6f">6 Posts</h6>
-              </a>
-            </div>
-          </div>
-        </a>
-      </div>
+      <?php endforeach; ?>
     </div>
     <div id="recent-post" class="col-sm-6">
       <h3 class="title-section title-section-bottom">POST TERBARU</h3>
       <div class="underscore"></div>
-      <div data-aos="zoom-in">
+      <?php foreach ($blogTerbarus as $key => $blogTerbaru) :?>
+        <div data-aos="zoom-in">
         <div class="col-sm-12 post-recent">
           <div class="col-sm-4 col-xs-5 img-recent-wrap">
-            <img class="img-responsive img-recent" src="assets/img/thumb/e96c5309f9de4ea8a8e5d1858ea0e03c.jpg" />
+            <img class="img-responsive img-recent" src="<?= asset_url($blogTerbaru['photo']) ?>" />
           </div>
           <div class="col-sm-8 col-xs-7 main-pengumuman">
-            <a href="single/membangun-generasi-melalui-pendidikan-sebagai-investasi-masa-depan-yang-lebih-cerah2022-04-2702-16-42.html">
-              <h4 class="title-recent">Membangun Generasi Melalui Pendidikan Sebagai Investasi Masa Depan Yang Lebih
-                Cerah</h4>
+            <a href="<?= base_url('landing/blog-view/'.$blogTerbaru['id']) ?>">
+              <h4 class="title-recent"><?= $blogTerbaru['title'] ?></h4>
             </a>
-            <h6 style="color:#555;font-family: myf">Penulis : <b>INDRIA ARIFIANI</b><span style="margin-left:10px">
-                Tanggal : <b>27 Apr 2022</b></span></h6>
+            <h6 style="color:#555;font-family: myf">Penulis : <b><?= $blogTerbaru['writer_name'] ?></b><span style="margin-left:10px">
+                Tanggal : <b><?= format_date($blogTerbaru['date'],'d F Y') ?></b></span></h6>
             <p>
-              Kemajuan suatu bangsa ditandai dengan majunya kesempatan memperoleh pendidikan yang luas dan berkualitas
-              bagi masyarakatnya. Pendidikan yang berkualitas dan dinikmati secara luas oleh setiap anggota m...
+            <?= substr(strip_tags($blogTerbaru['body']),0,110) . "..."?>
             </p>
-            <a href="single/membangun-generasi-melalui-pendidikan-sebagai-investasi-masa-depan-yang-lebih-cerah2022-04-2702-16-42.html" style="color:green">Selengkapnya >> </a>
+            <a href="<?= base_url('landing/blog-view/'.$blogTerbaru['id']) ?>" style="color:green">Selengkapnya >> </a>
           </div>
         </div>
       </div>
-      <div data-aos="zoom-in">
-        <div class="col-sm-12 post-recent">
-          <div class="col-sm-4 col-xs-5 img-recent-wrap">
-            <img class="img-responsive img-recent" src="assets/img/thumb/02feb679cafca1d83191db4418ed34f1.jpg" />
-          </div>
-          <div class="col-sm-8 col-xs-7 main-pengumuman">
-            <a href="single/bukan-puasa-yang-bikin-jerawat-datang-ayo-intip-penyebabnya-2022-04-2503-26-05.html">
-              <h4 class="title-recent">Bukan Puasa yang Bikin Jerawat Datang! Ayo Intip Penyebabnya!</h4>
-            </a>
-            <h6 style="color:#555;font-family: myf">Penulis : <b>LATIFFATUNNISSA NURUL HIDAYAH</b><span style="margin-left:10px"> Tanggal : <b>25 Apr 2022</b></span></h6>
-            <p>
-              Marhaban Yaa Ramadhan.
-
-              &nbsp; &nbsp; &nbsp; &nbsp; Mendengar kata bulan Ramadhan, tak asing lagi bagi kita tentang puasa.
-              Segala aktivitas yang dilakukan untuk mencari keberkahan bagi muslim dan mu...
-            </p>
-            <a href="single/bukan-puasa-yang-bikin-jerawat-datang-ayo-intip-penyebabnya-2022-04-2503-26-05.html" style="color:green">Selengkapnya >> </a>
-          </div>
-        </div>
-      </div>
-      <div data-aos="zoom-in">
-        <div class="col-sm-12 post-recent">
-          <div class="col-sm-4 col-xs-5 img-recent-wrap">
-            <img class="img-responsive img-recent" src="assets/img/thumb/27b55f9c9c944f4702441147a3463e89.jpg" />
-          </div>
-          <div class="col-sm-8 col-xs-7 main-pengumuman">
-            <a href="single/sosok-kartini-masa-kini-bagi-kemajuan-pendidikan-dan-perempuan2022-04-2423-36-28.html">
-              <h4 class="title-recent">Sosok Kartini Masa Kini Bagi Kemajuan Pendidikan dan Perempuan</h4>
-            </a>
-            <h6 style="color:#555;font-family: myf">Penulis : <b>LEGENDARIA RAULA SAPUTRI</b><span style="margin-left:10px"> Tanggal : <b>25 Apr 2022</b></span></h6>
-            <p>
-              Sosok Kartini Masa Kini Bagi Kemajuan Pendidikan dan Perempuan
-
-              Oleh: Legendaria Raula Saputri
-
-              UIN Sunan Kalijaga Yogyakarta
-
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ...
-            </p>
-            <a href="single/sosok-kartini-masa-kini-bagi-kemajuan-pendidikan-dan-perempuan2022-04-2423-36-28.html" style="color:green">Selengkapnya >> </a>
-          </div>
-        </div>
-      </div>
-      <div data-aos="zoom-in">
-        <div class="col-sm-12 post-recent">
-          <div class="col-sm-4 col-xs-5 img-recent-wrap">
-            <img class="img-responsive img-recent" src="assets/img/thumb/13fbc85de66c55bab4a93808e9be7b45.jpg" />
-          </div>
-          <div class="col-sm-8 col-xs-7 main-pengumuman">
-            <a href="single/menuju-indonesia-maju-dengan-pendidikan-anak-usia-dini2022-04-2103-03-13.html">
-              <h4 class="title-recent">Menuju Indonesia maju dengan pendidikan anak usia dini</h4>
-            </a>
-            <h6 style="color:#555;font-family: myf">Penulis : <b>APRILIA FITRI KOMALASARI</b><span style="margin-left:10px"> Tanggal : <b>21 Apr 2022</b></span></h6>
-            <p>
-              Menuju Indonesia Yang Maju Dengan Pendidikan Anak Usia Dini
-              Oleh : Aprilia Fitri Komalasari
-              Mahasiswa Pendidikan Kimia&nbsp;
-              Fakultas Ilmu Tarbiyah dan Keguruan
-              UIN Sunan Kalijaga Yogyakarta
-              Bebe...
-            </p>
-            <a href="single/menuju-indonesia-maju-dengan-pendidikan-anak-usia-dini2022-04-2103-03-13.html" style="color:green">Selengkapnya >> </a>
-          </div>
-        </div>
-      </div>
-      <div data-aos="zoom-in">
-        <div class="col-sm-12 post-recent">
-          <div class="col-sm-4 col-xs-5 img-recent-wrap">
-            <img class="img-responsive img-recent" src="assets/img/thumb/879eee6203c99b2420831f9c38a52bb0.jpg" />
-          </div>
-          <div class="col-sm-8 col-xs-7 main-pengumuman">
-            <a href="single/rangkulan-untuk-para-penyintas-kekerasan-seksual2022-04-1404-21-39.html">
-              <h4 class="title-recent">Rangkulan untuk Para Penyintas Kekerasan Seksual</h4>
-            </a>
-            <h6 style="color:#555;font-family: myf">Penulis : <b>CHYNDI NADHEA PUSPARENI</b><span style="margin-left:10px"> Tanggal : <b>14 Apr 2022</b></span></h6>
-            <p>
-              Maraknya kasus kekerasan seksual yang terjadi belakangan ini tentunya menjadi momok tersendiri bagi
-              masyarakat. Banyaknya kasus menyebabkan banyak kekhawatiran timbul di benak masyarakat, terutama bag...
-            </p>
-            <a href="single/rangkulan-untuk-para-penyintas-kekerasan-seksual2022-04-1404-21-39.html" style="color:green">Selengkapnya >> </a>
-          </div>
-        </div>
-      </div>
+      <?php endforeach; ?>
     </div>
     <div class="col-sm-3">
       <h3 class="title-section title-section-bottom">AGENDA</h3>

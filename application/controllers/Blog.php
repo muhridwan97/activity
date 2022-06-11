@@ -54,6 +54,9 @@ class Blog extends App_Controller
         }else if($civitasType == "MAHASISWA"){
             $filters['mahasiswa'] = $civitasLoggedIn;
         }
+        if(!AuthorizationModel::hasPermission(PERMISSION_BLOG_VALIDATE)){
+            $filters['writed_by'] = UserModel::loginData('id', '-1');
+        }
         $blogs = $this->blog->getAll($filters);
 
         if ($export) {
@@ -91,14 +94,8 @@ class Blog extends App_Controller
             $pembimbingId = $student['id_pembimbing'];
             $pembimbing = $student['nama_pembimbing'];
         }
-        if(AuthorizationModel::hasPermission(PERMISSION_BLOG_VALIDATE)){
-            $users = $this->user->getAll(['status'=> UserModel::STATUS_ACTIVATED]);
-        }else{
-            $users = $this->user->getAll([
-                'status'=> UserModel::STATUS_ACTIVATED,
-                'id' => $civitasLogin['id']
-            ]);
-        }
+        
+        $users = $this->user->getAll(['status'=> UserModel::STATUS_ACTIVATED]);
         $categories = $this->category->getAll();
 
         $this->render('blog/create', compact('users', 'categories'));

@@ -98,6 +98,18 @@ $segment3 = $this->uri->segment(3);
 								</a>
 							</li>
 						<?php endif; ?>
+						<?php if (AuthorizationModel::isAuthorized(PERMISSION_STUDENT_VIEW)) : ?>
+							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'student' ? ' active' : '' ?>">
+								<a class="nav-link" href="<?= site_url('master/student') ?>">
+									<i class="mdi mdi-office-building-outline mr-2"></i>Student
+									<?php if ($this->config->item('sso_enable')) : ?>
+										<span class="badge badge-info badge-pill ml-auto">
+											LTR
+										</span>
+									<?php endif; ?>
+								</a>
+							</li>
+						<?php endif; ?>
 					</ul>
 				</div>
 			</li>

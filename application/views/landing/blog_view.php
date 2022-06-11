@@ -22,6 +22,9 @@
 			<span class="text-created-post"><?= $blog['count_view'] ?></span>
 		</p>
 	</div>
+	<button type="button" class="btn btn-outline-success btn-floating" data-mdb-ripple-color="dark">
+		<i class="fas fa-star"></i>
+	</button>
 	<?php if (!empty($blog['attachment'])) : ?>
 		<a href="<?= base_url() . 'uploads/' . $blog['attachment'] ?>">
 			<button class="btn btn-primary">Lihat Lampiran</button>
@@ -47,10 +50,9 @@
 				<h3>POST TERKAIT</h3>
 				<div class="underscore" style="margin-left:0px;margin-left:0px;margin-bottom:15px;"></div>
 				<ul id="terkait-post-list">
-					<li><a href="kuliah-via-daring-hanya-formalitas-2020-06-2807-45-54.html">Kuliah via Daring, Hanya Formalitas?</a></li>
-					<li><a href="gangguan-mental-pada-masa-pandemi2020-10-0601-35-38.html">Gangguan Mental Pada Masa Pandemi</a></li>
-					<li><a href="omnibus-law-bentuk-nyata-fungsi-hukum-tidak-lagi-sebagai-pelaksana-kehendak-rakyat2020-10-0609-48-16.html">OMNIBUS LAW : BENTUK NYATA FUNGSI HUKUM TIDAK LAGI SEBAGAI PELAKSANA KEHENDAK RAKYAT</a></li>
-					<li><a href="renjana-tak-bertepi2020-10-2006-46-50.html">Renjana Tak Bertepi</a></li>
+					<?php foreach ($blogTerkaits as $key => $blogTerkait) :?>
+						<li><a href="<?= base_url('landing/blog-view/'.$blogTerkait['id']) ?>"><?= $blogTerkait['title'] ?></a></li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 		</div>
@@ -59,11 +61,9 @@
 				<h3>POST TEBARU</h3>
 				<div class="underscore" style="margin-left:0px;margin-left:0px;margin-bottom:15px;"></div>
 				<ul id="terbaru-post-list">
-					<li><a href="membangun-generasi-melalui-pendidikan-sebagai-investasi-masa-depan-yang-lebih-cerah2022-04-2702-16-42.html">Membangun Generasi Melalui Pendidikan Sebagai Investasi Masa Depan Yang Lebih Cerah</a></li>
-					<li><a href="bukan-puasa-yang-bikin-jerawat-datang-ayo-intip-penyebabnya-2022-04-2503-26-05.html">Bukan Puasa yang Bikin Jerawat Datang! Ayo Intip Penyebabnya!</a></li>
-					<li><a href="sosok-kartini-masa-kini-bagi-kemajuan-pendidikan-dan-perempuan2022-04-2423-36-28.html">Sosok Kartini Masa Kini Bagi Kemajuan Pendidikan dan Perempuan</a></li>
-					<li><a href="menuju-indonesia-maju-dengan-pendidikan-anak-usia-dini2022-04-2103-03-13.html">Menuju Indonesia maju dengan pendidikan anak usia dini</a></li>
-					<li><a href="rangkulan-untuk-para-penyintas-kekerasan-seksual2022-04-1404-21-39.html">Rangkulan untuk Para Penyintas Kekerasan Seksual</a></li>
+					<?php foreach ($blogTerbarus as $key => $blogTerbaru) :?>
+						<li><a href="<?= base_url('landing/blog-view/'.$blogTerbaru['id']) ?>"><?= $blogTerbaru['title'] ?></a></li>
+					<?php endforeach; ?>
 				</ul>
 			</div>
 		</div>

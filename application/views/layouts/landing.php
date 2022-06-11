@@ -80,6 +80,14 @@ function buildTree(array $elements, $parentId = 0)
 }
 
 $treeMenu = buildTree($menus);
+
+$data['blogPopulars'] = $this->blog->getAll([
+  'limit' => 3,
+  'sort_by' => 'count_view',
+  'order_method' => 'DESC'
+]);
+$data['agendas'] = $this->agenda->getAll(['sort_by' => 'date', 'limit' => 5]);
+
 ?>
 <?php $this->load->view('layouts/landing/_header', compact('treeMenu')) ?>
 <div id="list-post-wrap">
