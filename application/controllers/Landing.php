@@ -9,6 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @property BlogModel $blog
  * @property AgendaModel $agenda
  * @property StudentModel $student
+ * @property LikeModel $like
  * Class Dashboard
  */
 class Landing extends App_Controller
@@ -26,6 +27,7 @@ class Landing extends App_Controller
 		$this->load->model('BlogModel', 'blog');
 		$this->load->model('AgendaModel', 'agenda');
 		$this->load->model('StudentModel', 'student');
+		$this->load->model('LikeModel', 'like');
 
         $this->load->library('pagination');
 
@@ -51,8 +53,9 @@ class Landing extends App_Controller
             'order_method' => 'DESC'
         ]);
         $bestWriters = $this->blog->getBestWriter();
+        $bestBlogs = $this->blog->getBestBlog();
 
-		$this->render('landing/index', compact('banners', 'agendas', 'blogTerbarus', 'bestWriters'));
+		$this->render('landing/index', compact('banners', 'agendas', 'blogTerbarus', 'bestWriters', 'bestBlogs'));
 	}
 
 	public function page($id)
@@ -128,8 +131,15 @@ class Landing extends App_Controller
             'limit' => 5,
             'category' => $blog['id_category'],
         ]);
+        $userId = UserModel::loginData('id', '-1');
 
-		$this->render('landing/blog_view', compact('blog', 'blogTerbarus', 'blogTerkaits'));
+        $countLike = $this->like->getBy(['id_reference' => $id], 'COUNT');
+        $isLike = 0;
+        if($userId > 0){
+            $isLike = $this->like->getBy(['id_reference' => $id, 'created_by' => $userId ], 'COUNT');
+        }
+
+		$this->render('landing/blog_view', compact('blog', 'blogTerbarus', 'blogTerkaits', 'countLike', 'isLike'));
 	}
 
 	public function agenda($id)

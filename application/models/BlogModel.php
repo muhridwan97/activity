@@ -86,6 +86,20 @@ class BlogModel extends App_Model
         return $data;
     }
 
+    function getBestBlog()
+    {
+        $baseQuery = $this->getBaseQuery()
+                ->select([
+                    'COUNT(likes.id) AS count_like'
+                ])
+                ->join('likes','likes.id_reference = '.$this->table . '.id', 'left');
+        $baseQuery->where($this->table . '.is_deleted', false);
+        $baseQuery->order_by('COUNT(likes.id)', 'desc');
+        $baseQuery->group_by($this->table . '.id');
+        $data = $baseQuery->limit(5)->get()->result_array();
+        return $data;
+    }
+
     /**
      * Update model.
      *
