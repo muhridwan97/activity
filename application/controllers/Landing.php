@@ -10,6 +10,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @property AgendaModel $agenda
  * @property StudentModel $student
  * @property LikeModel $like
+ * @property CategoryModel $category
  * Class Dashboard
  */
 class Landing extends App_Controller
@@ -28,6 +29,7 @@ class Landing extends App_Controller
 		$this->load->model('AgendaModel', 'agenda');
 		$this->load->model('StudentModel', 'student');
 		$this->load->model('LikeModel', 'like');
+		$this->load->model('CategoryModel', 'category');
 
         $this->load->library('pagination');
 
@@ -64,14 +66,14 @@ class Landing extends App_Controller
 		$this->render('landing/page', compact('content'));
 	}
 
-	public function blog($category= 'Opini')
+	public function blog($slug= 'opini')
 	{
 		// $filters = array_merge($_GET, ['page' => get_url_param('page', 1)]);
         // $blog = $this->blog->getAll($filters);
 
 		
         $blog = $this->blog->getAll([
-			'ref_categories.category' => 'Opini'
+			'ref_categories.slug' => 'opini'
 		]);
 		
 		//konfigurasi pagination
@@ -107,8 +109,11 @@ class Landing extends App_Controller
  
 		$filters['limit'] = $config["per_page"];
 		$filters['start'] = $data['page'];
-		$filters['category'] = $category;
-		$data['category'] = $category;
+		$filters['slug'] = $slug;
+		$category = $this->category->getBy([
+			'slug' => $slug
+		],true);
+		$data['category'] = $category['category'];
         //panggil function get_mahasiswa_list yang ada pada mmodel mahasiswa_model. 
         $data['data'] = $this->blog->get_blog_list($filters);   
  

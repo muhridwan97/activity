@@ -66,6 +66,9 @@ class BlogModel extends App_Model
         if (key_exists('category', $filters) && !empty($filters['category'])) {
             $baseQuery->where('ref_categories.category', $filters['category']);
         }
+        if (key_exists('slug', $filters) && !empty($filters['slug'])) {
+            $baseQuery->where('ref_categories.slug', $filters['slug']);
+        }
         if (key_exists('writer', $filters) && !empty($filters['writer'])) {
             $baseQuery->where($this->table.'.writed_by', $filters['writer']);
         }

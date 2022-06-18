@@ -15,7 +15,6 @@ class Migration_Create_table_blogs extends CI_Migration
             'title' => ['type' => 'VARCHAR', 'constraint' => '500'],
             'body' => ['type' => 'TEXT', 'null' => TRUE],
             'writed_by' => ['type' => 'INT', 'constraint' => 11, 'unsigned' => TRUE],
-            'category' => ['type' => 'VARCHAR', 'constraint' => '100'],
             'date' => ['type' => 'DATE', 'null' => TRUE],
             'photo' => ['type' => 'VARCHAR', 'constraint' => '500'],
             'attachment' => ['type' => 'VARCHAR', 'constraint' => '500'],

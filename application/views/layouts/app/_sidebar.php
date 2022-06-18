@@ -87,7 +87,7 @@ $segment3 = $this->uri->segment(3);
 						<?php if (AuthorizationModel::isAuthorized(PERMISSION_MENU_VIEW)) : ?>
 							<li class="nav-item<?= $segment1 == 'master' && $segment2 == 'menu' ? ' active' : '' ?>">
 								<a class="nav-link" href="<?= site_url('master/menu') ?>">
-									<i class="mdi mdi-badge-account-horizontal-outline mr-2"></i>Menu
+									<i class="mdi mdi-apps mr-2"></i>Menu
 								</a>
 							</li>
 						<?php endif; ?>
