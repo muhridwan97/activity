@@ -54,10 +54,6 @@ try {
     if ($('#form-role').length) {
         import("./pages/role").then(role => role.default());
     }
-
-    if ($('#media-viewer-wrapper').length) {
-        import("./pages/media-viewer").then(mediaViewer => mediaViewer.default());
-    }
     if ($('#form-research').length) {
         import("./pages/research").then(research => research.default());
     }

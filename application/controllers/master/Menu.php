@@ -256,13 +256,18 @@ class Menu extends App_Controller
             'description' => "Menu is deleted",
             'data' => json_encode($menu)
         ]);
+        $id_parent = $menu['id_parent'];
+        $sub = '';
+        if(!empty($id_parent)){
+            $sub = '/sub/'.$id_parent;
+        }
 
         if ($this->menu->delete($id, true)) {
             flash('warning', "Menu {$menu['menu_name']} successfully deleted");
         } else {
             flash('danger', "Delete Menu failed, try again or contact administrator");
         }
-        redirect('master/menu');
+        redirect('master/menu'.$sub);
     }
 
 

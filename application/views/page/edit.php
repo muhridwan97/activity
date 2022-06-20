@@ -12,7 +12,7 @@
             </div>
             <div class="form-group">
                 <label>Foto</label>
-                <input type="file" id="photo" name="photo" class="file-upload-default" data-max-size="10000000" required>
+                <input type="file" id="photo" name="photo" class="file-upload-default" data-max-size="10000000">
                 <div class="input-group col-xs-12">
                     <input type="text" class="form-control file-upload-info" value="<?= $page['photo'] ?>" disabled placeholder="Upload photo">
                     <span class="input-group-append">
