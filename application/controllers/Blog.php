@@ -149,6 +149,7 @@ class Blog extends App_Controller
                 'attachment' => $attachment,
                 'photo' => $photo,
                 'description' => $description,
+                'status' => AuthorizationModel::hasPermission([PERMISSION_BLOG_VALIDATE, PERMISSION_ALL_ACCESS]) ? BlogModel::STATUS_ACTIVE : BlogModel::STATUS_PENDING
             ]);
             $blogId = $this->db->insert_id();
 
