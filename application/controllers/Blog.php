@@ -162,7 +162,7 @@ class Blog extends App_Controller
 				]);
                 $blog = $this->blog->getById($blogId);
                 $this->notification
-                    ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                    ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH])
                     ->to($notifiedUsers)
                     ->send(new BlogCreatedNotification(
                         $blog
@@ -316,7 +316,7 @@ class Blog extends App_Controller
 					$this->load->model('notifications/BlogValidatedNotification');
                     $blog = $this->blog->getById($id);
                     $this->notification
-                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH])
                         ->to($this->user->getById($blog['writed_by']))
                         ->send(new BlogValidatedNotification(
                             $blog
@@ -325,7 +325,7 @@ class Blog extends App_Controller
                     $this->load->model('notifications/BlogRejectedNotification');
                     $blog = $this->blog->getById($id);
                     $this->notification
-                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH])
                         ->to($this->user->getById($blog['writed_by']))
                         ->send(new BlogRejectedNotification(
                             $blog
