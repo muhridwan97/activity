@@ -36,6 +36,7 @@
   <script src="<?= base_url('assets/datatables/js/jquery.dataTables.min.js') ?>"></script>
   <link href="<?= base_url('assets/datatables/css/jquery.dataTables.min.css') ?>" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Lora" rel="stylesheet">
+    <link rel="icon" href="<?= base_url('assets/dist/img/icon.png') ?>" type="image/x-icon">
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -82,6 +83,7 @@ function buildTree(array $elements, $parentId = 0)
 $treeMenu = buildTree($menus);
 
 $data['blogPopulars'] = $this->blog->getAll([
+  'status' => BlogModel::STATUS_ACTIVE,
   'limit' => 3,
   'sort_by' => 'count_view',
   'order_method' => 'DESC'

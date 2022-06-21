@@ -51,6 +51,7 @@ class Landing extends App_Controller
 		$banners = $this->banner->getAll(['sort_by' => 'id']);
         $agendas = $this->agenda->getAll(['sort_by' => 'date', 'limit' => 7]);
         $blogTerbarus = $this->blog->getAll([
+            'status' => BlogModel::STATUS_ACTIVE,
             'limit' => 5,
             'order_method' => 'DESC'
         ]);
@@ -73,6 +74,7 @@ class Landing extends App_Controller
 
 		
         $blog = $this->blog->getAll([
+            'status' => BlogModel::STATUS_ACTIVE,
 			'ref_categories.slug' => 'opini'
 		]);
 		
@@ -110,6 +112,7 @@ class Landing extends App_Controller
 		$filters['limit'] = $config["per_page"];
 		$filters['start'] = $data['page'];
 		$filters['slug'] = $slug;
+		$filters['status'] = BlogModel::STATUS_ACTIVE;
 		$category = $this->category->getBy([
 			'slug' => $slug
 		],true);

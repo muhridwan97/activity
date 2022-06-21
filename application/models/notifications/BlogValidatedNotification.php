@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Class FinishExamNotification
+ * Class BlogValidatedNotification
  */
-class FinishExamNotification extends Notify
+class BlogValidatedNotification extends Notify
 {
-    private $examExercise;
+    private $blog;
 	private $message;
 	private $url;
 
-    public function __construct($examExercise = null)
+    public function __construct($blog = null)
     {
-        $this->examExercise = $examExercise;
-		$this->message = "Exam {$examExercise['title']} is finished at " . $examExercise['updated_at'];
-		$this->url = site_url("training/exam/view/{$examExercise['id_exam']}");
+        $this->blog = $blog;
+		$this->message = "Blog {$blog['title']} is Validated, check it out now";
+		$this->url = site_url("blog/view/{$blog['id']}");
     }
 
     /**
@@ -25,8 +25,8 @@ class FinishExamNotification extends Notify
     public function toWeb($notifiable)
     {
         return $data = [
-            'channel' => NotificationModel::SUBSCRIBE_TRAINING,
-            'event' => NotificationModel::EVENT_EXAM_FINISHED,
+            'channel' => NotificationModel::SUBSCRIBE_BLOG,
+            'event' => NotificationModel::EVENT_BLOG_VALIDATED,
             'payload' => [
                 'message' => $this->message,
                 'url' => $this->url,
@@ -45,19 +45,19 @@ class FinishExamNotification extends Notify
     {
         return [
             'id_user' => $notifiable['id'],
-            'id_related' => $this->examExercise['id'],
-            'channel' => NotificationModel::SUBSCRIBE_TRAINING,
-            'event' => NotificationModel::EVENT_EXAM_FINISHED,
+            'id_related' => $this->blog['id'],
+            'channel' => NotificationModel::SUBSCRIBE_BLOG,
+            'event' => NotificationModel::EVENT_BLOG_VALIDATED,
             'data' => json_encode([
                 'message' => $this->message,
                 'url' => $this->url,
                 'time' => format_date('now', 'Y-m-d H:i:s'),
-                'description' => 'Curriculum exam is finished'
+                'description' => 'Validated blog data'
             ])
         ];
     }
 
-	/**
+    /**
 	 * Mail notification.
 	 *
 	 * @param $notifiable
@@ -65,20 +65,19 @@ class FinishExamNotification extends Notify
 	 */
 	public function toMail($notifiable)
 	{
+        $username = UserModel::loginData('username');
 		return [
 			'to' => $notifiable['email'],
-			'subject' => "Exam {$this->examExercise['title']} is finished, ready to be assessed",
+			'subject' => "Blog {$this->blog['title']} has been validated by {$username}",
 			'template' => 'emails/basic',
 			'data' => [
 				'name' => $notifiable['name'],
 				'email' => $notifiable['email'],
 				'content' => "
-					Exam <b>{$this->examExercise['title']}</b> ({$this->examExercise['category']}) 
-					by {$this->examExercise['employee_name']}
-					is finished and ready to be assessed by you,  
-                    please visit the assessment menu and evaluate the result of the exam.
-				"
-			],
+                    Blog <b>{$this->blog['title']}</b> has been validated by <b>{$username}</b>,
+                    <br><br>
+                    Rincian: " . if_empty($this->blog['description'], 'no additional message')
+			]
 		];
 	}
 }

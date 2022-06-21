@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Class CreateTrainingNotification
+ * Class BlogRejectedNotification
  */
-class CreateTrainingNotification extends Notify
+class BlogRejectedNotification extends Notify
 {
-    private $training;
+    private $blog;
 	private $message;
 	private $url;
 
-    public function __construct($training = null)
+    public function __construct($blog = null)
     {
-        $this->training = $training;
-		$this->message = "Training {$training['curriculum_title']} for {$training['employee_name']} is assigned, learn now";
-		$this->url = site_url("training/class/view/{$training['id']}");
+        $this->blog = $blog;
+		$this->message = "Blog {$blog['title']} is Rejected, check it out now";
+		$this->url = site_url("blog/view/{$blog['id']}");
     }
 
     /**
@@ -25,8 +25,8 @@ class CreateTrainingNotification extends Notify
     public function toWeb($notifiable)
     {
         return $data = [
-            'channel' => NotificationModel::SUBSCRIBE_TRAINING,
-            'event' => NotificationModel::EVENT_TRAINING_ASSIGNED,
+            'channel' => NotificationModel::SUBSCRIBE_BLOG,
+            'event' => NotificationModel::EVENT_BLOG_REJECTED,
             'payload' => [
                 'message' => $this->message,
                 'url' => $this->url,
@@ -45,19 +45,19 @@ class CreateTrainingNotification extends Notify
     {
         return [
             'id_user' => $notifiable['id'],
-            'id_related' => $this->training['id'],
-            'channel' => NotificationModel::SUBSCRIBE_TRAINING,
-            'event' => NotificationModel::EVENT_TRAINING_ASSIGNED,
+            'id_related' => $this->blog['id'],
+            'channel' => NotificationModel::SUBSCRIBE_BLOG,
+            'event' => NotificationModel::EVENT_BLOG_REJECTED,
             'data' => json_encode([
                 'message' => $this->message,
                 'url' => $this->url,
                 'time' => format_date('now', 'Y-m-d H:i:s'),
-                'description' => 'New training class assigned'
+                'description' => 'Rejected blog data'
             ])
         ];
     }
 
-	/**
+    /**
 	 * Mail notification.
 	 *
 	 * @param $notifiable
@@ -65,20 +65,19 @@ class CreateTrainingNotification extends Notify
 	 */
 	public function toMail($notifiable)
 	{
+        $username = UserModel::loginData('username');
 		return [
 			'to' => $notifiable['email'],
-			'subject' => "{$this->training['curriculum_title']} curriculum training is available for you",
+			'subject' => "Blog {$this->blog['title']} has been rejected by {$username}",
 			'template' => 'emails/basic',
 			'data' => [
 				'name' => $notifiable['name'],
 				'email' => $notifiable['email'],
 				'content' => "
-					Ready to upgrade new skills? 
-					Your are assigned to learn <b>{$this->training['curriculum_title']}</b>,  
-                    read message detail below or contact your Trainer for further information.
+                    Blog <b>{$this->blog['title']}</b> has been rejected by <b>{$username}</b>,
                     <br><br>
-                    Note: " . if_empty($this->training['description'], 'no additional message')
-			],
+                    Rincian: " . if_empty($this->blog['description'], 'no additional message')
+			]
 		];
 	}
 }

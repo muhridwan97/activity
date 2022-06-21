@@ -9,6 +9,8 @@ class BlogModel extends App_Model
 
     const STATUS_ACTIVE = 'ACTIVE';
     const STATUS_INACTIVE = 'INACTIVE';
+    const STATUS_REJECTED = 'REJECTED';
+    const STATUS_PENDING = 'PENDING';
 
     public function __construct()
     {
@@ -72,6 +74,9 @@ class BlogModel extends App_Model
         if (key_exists('writer', $filters) && !empty($filters['writer'])) {
             $baseQuery->where($this->table.'.writed_by', $filters['writer']);
         }
+        if (key_exists('status', $filters) && !empty($filters['status'])) {
+            $baseQuery->where($this->table.'.status', $filters['status']);
+        }
         $baseQuery->where($this->table . '.is_deleted', false);
         $data = $baseQuery->limit($limit, $start)->get()->result_array();
         return $data;
@@ -83,6 +88,7 @@ class BlogModel extends App_Model
             'COUNT('.$this->table . '.id) AS count_blog'
         ]);
         $baseQuery->where($this->table . '.is_deleted', false);
+        $baseQuery->where($this->table . '.status', BlogModel::STATUS_ACTIVE);
         $baseQuery->order_by('COUNT('.$this->table . '.id)', 'desc');
         $baseQuery->group_by($this->table . '.writed_by');
         $data = $baseQuery->limit(5)->get()->result_array();
@@ -97,6 +103,7 @@ class BlogModel extends App_Model
                 ])
                 ->join('likes','likes.id_reference = '.$this->table . '.id', 'left');
         $baseQuery->where($this->table . '.is_deleted', false);
+        $baseQuery->where($this->table . '.status', BlogModel::STATUS_ACTIVE);
         $baseQuery->order_by('COUNT(likes.id)', 'desc');
         $baseQuery->group_by($this->table . '.id');
         $data = $baseQuery->limit(5)->get()->result_array();

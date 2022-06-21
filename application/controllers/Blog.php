@@ -27,11 +27,13 @@ class Blog extends App_Controller
 
         $this->load->model('DepartmentModel', 'department');
         $this->load->model('UserModel', 'user');
+        $this->load->model('NotificationModel', 'notification');
         $this->load->model('modules/Mailer', 'mailer');
         $this->load->model('modules/Exporter', 'exporter');
         $this->load->model('modules/Uploader', 'uploader');
 
         $this->setFilterMethods([
+            'validate_blog' => 'POST|PUT'
 		]);
     }
 
@@ -67,7 +69,7 @@ class Blog extends App_Controller
     }
 
     /**
-     * Show Skripsi data.
+     * Show Blog data.
      *
      * @param $id
      */
@@ -75,9 +77,9 @@ class Blog extends App_Controller
     {
         AuthorizationModel::mustAuthorized(PERMISSION_BLOG_VIEW);
 
-        $curriculum = $this->curriculum->getById($id);
+        $blog = $this->blog->getById($id);
 
-        $this->render('curriculum/view', compact('curriculum'));
+        $this->render('blog/view', compact('blog'));
     }
 
     /**
@@ -148,11 +150,23 @@ class Blog extends App_Controller
                 'photo' => $photo,
                 'description' => $description,
             ]);
+            $blogId = $this->db->insert_id();
 
 
             $this->db->trans_complete();
 
             if ($this->db->trans_status()) {
+                $this->load->model('notifications/BlogCreatedNotification');
+				$notifiedUsers = $this->user->getByPermission([
+					PERMISSION_BLOG_VALIDATE, PERMISSION_ALL_ACCESS
+				]);
+                $blog = $this->blog->getById($blogId);
+                $this->notification
+                    ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                    ->to($notifiedUsers)
+                    ->send(new BlogCreatedNotification(
+                        $blog
+                    ));
                 flash('success', "Blog {$title} successfully created", 'blog');
             } else {
                 flash('danger', "Create Blog failed, try again of contact administrator");
@@ -262,6 +276,70 @@ class Blog extends App_Controller
             flash('danger', "Delete Blog failed, try again or contact administrator");
         }
         redirect('blog');
+    }
+
+    /**
+     * Validate absent data.
+     *
+     * @param null $id
+     */
+    public function validate_blog($id = null)
+    {
+		if ($this->validate(['status' => 'trim|required'])) {
+			$id = if_empty($this->input->post('id'), $id);
+			$status = $this->input->post('status');
+			$description = $this->input->post('description');
+
+			$this->db->trans_start();
+
+            $blog = $this->blog->getById($id);
+
+            // push any status absent to history
+            $this->statusHistory->create([
+                'type' => StatusHistoryModel::TYPE_BLOG,
+                'id_reference' => $id,
+                'status' => $status=="VALIDATED" ? BlogModel::STATUS_ACTIVE : BlogModel::STATUS_REJECTED,
+                'description' => $description,
+                'data' => json_encode($blog)
+            ]);
+
+            $this->blog->update([
+                'status' => $status=="VALIDATED" ? BlogModel::STATUS_ACTIVE : BlogModel::STATUS_REJECTED
+            ], $id);
+
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status()) {
+                $statusClass = 'warning';
+                if ($status != BlogModel::STATUS_REJECTED) {
+                    $statusClass = 'success';
+					$this->load->model('notifications/BlogValidatedNotification');
+                    $blog = $this->blog->getById($id);
+                    $this->notification
+                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                        ->to($this->user->getById($blog['writed_by']))
+                        ->send(new BlogValidatedNotification(
+                            $blog
+                        ));
+                }else{
+                    $this->load->model('notifications/BlogRejectedNotification');
+                    $blog = $this->blog->getById($id);
+                    $this->notification
+                        ->via([Notify::DATABASE_PUSH, Notify::WEB_PUSH, Notify::MAIL_PUSH])
+                        ->to($this->user->getById($blog['writed_by']))
+                        ->send(new BlogRejectedNotification(
+                            $blog
+                        ));
+                }
+
+                $message = "Blog <strong>{$blog['title']}</strong> successfully <strong>{$status}</strong>";
+
+                flash($statusClass, $message);
+            } else {
+                flash('danger', "Validating blog <strong>{$blog['title']}</strong> failed, try again or contact administrator");
+            }
+		}
+		redirect(get_url_param('redirect', 'blog'));
     }
 
     /**
